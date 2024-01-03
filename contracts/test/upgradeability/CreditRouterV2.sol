@@ -114,128 +114,105 @@ contract CreditRouterV2 is IRouter, IERC721Receiver, Initializable, UUPSUpgradea
 
     /// @inheritdoc IRouter
     function liquidityGivenAsset(
-        IMint.LiquidityGivenAsset calldata,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenAsset calldata
     ) external override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function liquidityGivenAssetETHAsset(
-        IMint.LiquidityGivenAssetETHAsset calldata,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenAssetETHAsset calldata
     ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function liquidityGivenAssetETHCollateral(
-        IMint.LiquidityGivenAssetETHCollateral calldata,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenAssetETHCollateral calldata
     ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function liquidityGivenCollateral(
-        IMint.LiquidityGivenCollateral calldata,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenCollateral calldata
     ) external override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function liquidityGivenCollateralETHAsset(
-        IMint.LiquidityGivenCollateralETHAsset calldata,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenCollateralETHAsset calldata
     ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function liquidityGivenCollateralETHCollateral(
-        IMint.LiquidityGivenCollateralETHCollateral calldata,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenCollateralETHCollateral calldata
     ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function removeLiquidity(
-        IBurn.RemoveLiquidity calldata,
-        bytes32[] calldata _merkleProof
+        IBurn.RemoveLiquidity calldata
     ) external override returns (uint256 assetOut, uint128 collateralOut) {}
 
     /// @inheritdoc IRouter
     function removeLiquidityETHAsset(
-        IBurn.RemoveLiquidityETHAsset calldata,
-        bytes32[] calldata _merkleProof
+        IBurn.RemoveLiquidityETHAsset calldata
     ) external override returns (uint256 assetOut, uint128 collateralOut) {}
 
     /// @inheritdoc IRouter
     function removeLiquidityETHCollateral(
-        IBurn.RemoveLiquidityETHCollateral calldata,
-        bytes32[] calldata _merkleProof
+        IBurn.RemoveLiquidityETHCollateral calldata
     ) external override returns (uint256 assetOut, uint128 collateralOut) {}
 
     /// @inheritdoc IRouter
     function lendGivenPercent(
-        ILend.LendGivenPercent calldata,
-        bytes32[] calldata _merkleProof
+        ILend.LendGivenPercent calldata
     ) external override returns (uint256 assetIn, IPair.Claims memory claimsOut) {}
 
     /// @inheritdoc IRouter
     function lendGivenPercentETHAsset(
-        ILend.LendGivenPercentETHAsset calldata,
-        bytes32[] calldata _merkleProof
+        ILend.LendGivenPercentETHAsset calldata
     ) external payable override returns (uint256 assetIn, IPair.Claims memory claimsOut) {}
 
     /// @inheritdoc IRouter
     function lendGivenPercentETHCollateral(
-        ILend.LendGivenPercentETHCollateral calldata,
-        bytes32[] calldata _merkleProof
+        ILend.LendGivenPercentETHCollateral calldata
     ) external override returns (uint256 assetIn, IPair.Claims memory claimsOut) {}
 
     /// @inheritdoc IRouter
-    function collect(
-        IWithdraw.Collect calldata,
-        bytes32[] calldata _merkleProof
-    ) external override returns (IPair.Tokens memory tokensOut) {}
+    function collect(IWithdraw.Collect calldata) external override returns (IPair.Tokens memory tokensOut) {}
 
     /// @inheritdoc IRouter
     function collectETHAsset(
-        IWithdraw.CollectETHAsset calldata,
-        bytes32[] calldata _merkleProof
+        IWithdraw.CollectETHAsset calldata
     ) external override returns (IPair.Tokens memory tokensOut) {}
 
     /// @inheritdoc IRouter
     function collectETHCollateral(
-        IWithdraw.CollectETHCollateral calldata,
-        bytes32[] calldata _merkleProof
+        IWithdraw.CollectETHCollateral calldata
     ) external override returns (IPair.Tokens memory tokensOut) {}
 
     /// @inheritdoc IRouter
     function borrowGivenPercent(
-        IBorrow.BorrowGivenPercent calldata,
-        bytes32[] calldata _merkleProof
+        IBorrow.BorrowGivenPercent calldata
     ) external override returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function borrowGivenPercentETHAsset(
-        IBorrow.BorrowGivenPercentETHAsset calldata,
-        bytes32[] calldata _merkleProof
+        IBorrow.BorrowGivenPercentETHAsset calldata
     ) external override returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function borrowGivenPercentETHCollateral(
-        IBorrow.BorrowGivenPercentETHCollateral calldata,
-        bytes32[] calldata _merkleProof
+        IBorrow.BorrowGivenPercentETHCollateral calldata
     ) external payable override returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {}
 
     /// @inheritdoc IRouter
     function repay(
-        IPay.Repay calldata,
-        bytes32[] calldata _merkleProof
+        IPay.Repay calldata
     ) external override returns (uint128 assetIn, uint128 collateralOut, uint256[] memory duesFullyPaid) {}
 
     /// @inheritdoc IRouter
     function repayETHAsset(
-        IPay.RepayETHAsset calldata,
-        bytes32[] calldata _merkleProof
+        IPay.RepayETHAsset calldata
     ) external payable override returns (uint128 assetIn, uint128 collateralOut, uint256[] memory duesFullyPaid) {}
 
     /// @inheritdoc IRouter
     function repayETHCollateral(
-        IPay.RepayETHCollateral calldata,
-        bytes32[] calldata _merkleProof
+        IPay.RepayETHCollateral calldata
     ) external override returns (uint128 assetIn, uint128 collateralOut, uint256[] memory duesFullyPaid) {}
 
     /// @inheritdoc ICreditMintCallback

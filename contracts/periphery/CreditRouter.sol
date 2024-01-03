@@ -51,8 +51,6 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
     /// @inheritdoc IRouter
     ICreditPositionManager public override creditPositionManager;
 
-    bytes32 public merkleRoot;
-
     /*///////////////////////////////////////////////////////////////
                         Init
     //////////////////////////////////////////////////////////////*/
@@ -76,16 +74,6 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
         factory = _factory;
         weth = _weth;
         creditPositionManager = _creditPositionManager;
-    }
-
-    function setMerkleRoot(bytes32 _merkleRoot) external onlyOwner {
-        merkleRoot = _merkleRoot;
-    }
-
-    modifier onlyWhitelist(bytes32[] calldata _merkleProof) {
-        bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(msg.sender))));
-        require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), "CreditRouter: Not part of the whitelist");
-        _;
     }
 
     /*///////////////////////////////////////////////////////////////
@@ -156,28 +144,15 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function liquidityGivenAsset(
-        IMint.LiquidityGivenAsset calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut)
-    {
+        IMint.LiquidityGivenAsset calldata params
+    ) external override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {
         (assetIn, liquidityOut, id, dueOut) = Mint.liquidityGivenAsset(this, factory, creditPositionManager, params);
     }
 
     /// @inheritdoc IRouter
     function liquidityGivenAssetETHAsset(
-        IMint.LiquidityGivenAssetETHAsset calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        payable
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut)
-    {
+        IMint.LiquidityGivenAssetETHAsset calldata params
+    ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {
         (assetIn, liquidityOut, id, dueOut) = Mint.liquidityGivenAssetETHAsset(
             this,
             factory,
@@ -189,15 +164,8 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function liquidityGivenAssetETHCollateral(
-        IMint.LiquidityGivenAssetETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        payable
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut)
-    {
+        IMint.LiquidityGivenAssetETHCollateral calldata params
+    ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {
         (assetIn, liquidityOut, id, dueOut) = Mint.liquidityGivenAssetETHCollateral(
             this,
             factory,
@@ -209,14 +177,8 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function liquidityGivenCollateral(
-        IMint.LiquidityGivenCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut)
-    {
+        IMint.LiquidityGivenCollateral calldata params
+    ) external override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {
         (assetIn, liquidityOut, id, dueOut) = Mint.liquidityGivenCollateral(
             this,
             factory,
@@ -227,15 +189,8 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function liquidityGivenCollateralETHAsset(
-        IMint.LiquidityGivenCollateralETHAsset calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        payable
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut)
-    {
+        IMint.LiquidityGivenCollateralETHAsset calldata params
+    ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {
         (assetIn, liquidityOut, id, dueOut) = Mint.liquidityGivenCollateralETHAsset(
             this,
             factory,
@@ -247,15 +202,8 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function liquidityGivenCollateralETHCollateral(
-        IMint.LiquidityGivenCollateralETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        payable
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut)
-    {
+        IMint.LiquidityGivenCollateralETHCollateral calldata params
+    ) external payable override returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut) {
         (assetIn, liquidityOut, id, dueOut) = Mint.liquidityGivenCollateralETHCollateral(
             this,
             factory,
@@ -267,103 +215,83 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function removeLiquidity(
-        IBurn.RemoveLiquidity calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (uint256 assetOut, uint128 collateralOut) {
+        IBurn.RemoveLiquidity calldata params
+    ) external override returns (uint256 assetOut, uint128 collateralOut) {
         (assetOut, collateralOut) = Burn.removeLiquidity(factory, creditPositionManager, params);
     }
 
     /// @inheritdoc IRouter
     function removeLiquidityETHAsset(
-        IBurn.RemoveLiquidityETHAsset calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (uint256 assetOut, uint128 collateralOut) {
+        IBurn.RemoveLiquidityETHAsset calldata params
+    ) external override returns (uint256 assetOut, uint128 collateralOut) {
         (assetOut, collateralOut) = Burn.removeLiquidityETHAsset(factory, creditPositionManager, weth, params);
     }
 
     /// @inheritdoc IRouter
     function removeLiquidityETHCollateral(
-        IBurn.RemoveLiquidityETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (uint256 assetOut, uint128 collateralOut) {
+        IBurn.RemoveLiquidityETHCollateral calldata params
+    ) external override returns (uint256 assetOut, uint128 collateralOut) {
         (assetOut, collateralOut) = Burn.removeLiquidityETHCollateral(factory, creditPositionManager, weth, params);
     }
 
     /// @inheritdoc IRouter
     function lendGivenPercent(
-        ILend.LendGivenPercent calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (uint256 assetIn, IPair.Claims memory claimsOut) {
+        ILend.LendGivenPercent calldata params
+    ) external override returns (uint256 assetIn, IPair.Claims memory claimsOut) {
         (assetIn, claimsOut) = Lend.lendGivenPercent(this, factory, creditPositionManager, params);
     }
 
     /// @inheritdoc IRouter
     function lendGivenPercentETHAsset(
-        ILend.LendGivenPercentETHAsset calldata params,
-        bytes32[] calldata _merkleProof
-    ) external payable override onlyWhitelist(_merkleProof) returns (uint256 assetIn, IPair.Claims memory claimsOut) {
+        ILend.LendGivenPercentETHAsset calldata params
+    ) external payable override returns (uint256 assetIn, IPair.Claims memory claimsOut) {
         (assetIn, claimsOut) = Lend.lendGivenPercentETHAsset(this, factory, creditPositionManager, weth, params);
     }
 
     /// @inheritdoc IRouter
     function lendGivenPercentETHCollateral(
-        ILend.LendGivenPercentETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (uint256 assetIn, IPair.Claims memory claimsOut) {
+        ILend.LendGivenPercentETHCollateral calldata params
+    ) external override returns (uint256 assetIn, IPair.Claims memory claimsOut) {
         (assetIn, claimsOut) = Lend.lendGivenPercentETHCollateral(this, factory, creditPositionManager, weth, params);
     }
 
     /// @inheritdoc IRouter
-    function collect(
-        IWithdraw.Collect calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (IPair.Tokens memory tokensOut) {
+    function collect(IWithdraw.Collect calldata params) external override returns (IPair.Tokens memory tokensOut) {
         tokensOut = Withdraw.collect(factory, creditPositionManager, params);
     }
 
     /// @inheritdoc IRouter
     function collectETHAsset(
-        IWithdraw.CollectETHAsset calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (IPair.Tokens memory tokensOut) {
+        IWithdraw.CollectETHAsset calldata params
+    ) external override returns (IPair.Tokens memory tokensOut) {
         tokensOut = Withdraw.collectETHAsset(factory, creditPositionManager, weth, params);
     }
 
     /// @inheritdoc IRouter
     function collectETHCollateral(
-        IWithdraw.CollectETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (IPair.Tokens memory tokensOut) {
+        IWithdraw.CollectETHCollateral calldata params
+    ) external override returns (IPair.Tokens memory tokensOut) {
         tokensOut = Withdraw.collectETHCollateral(factory, creditPositionManager, weth, params);
     }
 
     /// @inheritdoc IRouter
     function borrowGivenPercent(
-        IBorrow.BorrowGivenPercent calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {
+        IBorrow.BorrowGivenPercent calldata params
+    ) external override returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {
         (assetOut, id, dueOut) = Borrow.borrowGivenPercent(this, factory, creditPositionManager, params);
     }
 
     /// @inheritdoc IRouter
     function borrowGivenPercentETHAsset(
-        IBorrow.BorrowGivenPercentETHAsset calldata params,
-        bytes32[] calldata _merkleProof
-    ) external override onlyWhitelist(_merkleProof) returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {
+        IBorrow.BorrowGivenPercentETHAsset calldata params
+    ) external override returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {
         (assetOut, id, dueOut) = Borrow.borrowGivenPercentETHAsset(this, factory, creditPositionManager, weth, params);
     }
 
     /// @inheritdoc IRouter
     function borrowGivenPercentETHCollateral(
-        IBorrow.BorrowGivenPercentETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        payable
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut)
-    {
+        IBorrow.BorrowGivenPercentETHCollateral calldata params
+    ) external payable override returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut) {
         (assetOut, id, dueOut) = Borrow.borrowGivenPercentETHCollateral(
             this,
             factory,
@@ -375,26 +303,18 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function repay(
-        IPay.Repay calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid)
-    {
+        IPay.Repay calldata params
+    ) external override returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid) {
         (assetIn, collateralOut, creditPositionFullyPaid) = Pay.pay(factory, creditPositionManager, params);
     }
 
     /// @inheritdoc IRouter
     function repayETHAsset(
-        IPay.RepayETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IPay.RepayETHAsset calldata params
     )
         external
         payable
         override
-        onlyWhitelist(_merkleProof)
         returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid)
     {
         (assetIn, collateralOut, creditPositionFullyPaid) = Pay.payETHAsset(
@@ -407,14 +327,8 @@ contract CreditRouter is IRouter, IERC721Receiver, Initializable, UUPSUpgradeabl
 
     /// @inheritdoc IRouter
     function repayETHCollateral(
-        IPay.RepayETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
-    )
-        external
-        override
-        onlyWhitelist(_merkleProof)
-        returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid)
-    {
+        IPay.RepayETHCollateral calldata params
+    ) external override returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid) {
         (assetIn, collateralOut, creditPositionFullyPaid) = Pay.payETHCollateral(
             factory,
             creditPositionManager,

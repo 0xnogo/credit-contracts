@@ -102,8 +102,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The array index of the locked debt received by dueTo.
     /// @return dueOut The locked debt received by dueTo.
     function liquidityGivenAsset(
-        IMint.LiquidityGivenAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenAsset calldata params
     ) external returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the mint function and add more liquidity to an existing pool.
@@ -116,8 +115,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The array index of the locked debt received by dueTo.
     /// @return dueOut The locked debt received by dueTo.
     function liquidityGivenAssetETHAsset(
-        IMint.LiquidityGivenAssetETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenAssetETHAsset calldata params
     ) external payable returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the mint function and add more liquidity to an existing pool.
@@ -131,8 +129,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The array index of the locked debt received by dueTo.
     /// @return dueOut The locked debt received by dueTo.
     function liquidityGivenAssetETHCollateral(
-        IMint.LiquidityGivenAssetETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenAssetETHCollateral calldata params
     ) external payable returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the mint function and add more liquidity to an existing pool.
@@ -144,8 +141,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The array index of the locked debt received by dueTo.
     /// @return dueOut The locked debt received by dueTo.
     function liquidityGivenCollateral(
-        IMint.LiquidityGivenCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenCollateral calldata params
     ) external returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the mint function and add more liquidity to an existing pool.
@@ -158,8 +154,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The array index of the locked debt received by dueTo.
     /// @return dueOut The locked debt received by dueTo.
     function liquidityGivenCollateralETHAsset(
-        IMint.LiquidityGivenCollateralETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenCollateralETHAsset calldata params
     ) external payable returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the mint function and add more liquidity to an existing pool.
@@ -173,8 +168,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The array index of the locked debt received by dueTo.
     /// @return dueOut The locked debt received by dueTo.
     function liquidityGivenCollateralETHCollateral(
-        IMint.LiquidityGivenCollateralETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        IMint.LiquidityGivenCollateralETHCollateral calldata params
     ) external payable returns (uint256 assetIn, uint256 liquidityOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the burn funtion and withdraw liquiidty from a pool.
@@ -182,8 +176,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return assetOut The amount of asset ERC20 received by assetTo.
     /// @return collateralOut The amount of collateral ERC20 received by collateralTo.
     function removeLiquidity(
-        IBurn.RemoveLiquidity calldata params,
-        bytes32[] calldata _merkleProof
+        IBurn.RemoveLiquidity calldata params
     ) external returns (uint256 assetOut, uint128 collateralOut);
 
     /// @dev Calls the burn funtion and withdraw liquiidty from a pool.
@@ -192,8 +185,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return assetOut The amount of asset ERC20 received by assetTo.
     /// @return collateralOut The amount of collateral ERC20 received by collateralTo.
     function removeLiquidityETHAsset(
-        IBurn.RemoveLiquidityETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IBurn.RemoveLiquidityETHAsset calldata params
     ) external returns (uint256 assetOut, uint128 collateralOut);
 
     /// @dev Calls the burn funtion and withdraw liquiidty from a pool.
@@ -202,8 +194,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return assetOut The amount of asset ERC20 received by assetTo.
     /// @return collateralOut The amount of collateral ERC20 received by collateralTo.
     function removeLiquidityETHCollateral(
-        IBurn.RemoveLiquidityETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        IBurn.RemoveLiquidityETHCollateral calldata params
     ) external returns (uint256 assetOut, uint128 collateralOut);
 
     /// @dev Calls the lend function and deposit asset into a pool.
@@ -213,8 +204,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return assetIn The amount of asset ERC20 deposited.
     /// @return claimsOut The amount of loan ERC20 and coverage ERC20 received by loanTo and coverageTo.
     function lendGivenPercent(
-        ILend.LendGivenPercent calldata params,
-        bytes32[] calldata _merkleProof
+        ILend.LendGivenPercent calldata params
     ) external returns (uint256 assetIn, IPair.Claims memory claimsOut);
 
     /// @dev Calls the lend function and deposit asset into a pool.
@@ -224,8 +214,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return assetIn The amount of asset ERC20 deposited.
     /// @return claimsOut The amount of loan ERC20 and coverage ERC20 received by loanTo and coverageTo.
     function lendGivenPercentETHAsset(
-        ILend.LendGivenPercentETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        ILend.LendGivenPercentETHAsset calldata params
     ) external payable returns (uint256 assetIn, IPair.Claims memory claimsOut);
 
     /// @dev Calls the lend function and deposit asset into a pool.
@@ -235,25 +224,20 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return assetIn The amount of asset ERC20 deposited.
     /// @return claimsOut The amount of loan ERC20 and coverage ERC20 received by loanTo and coverageTo.
     function lendGivenPercentETHCollateral(
-        ILend.LendGivenPercentETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        ILend.LendGivenPercentETHCollateral calldata params
     ) external returns (uint256 assetIn, IPair.Claims memory claimsOut);
 
     /// @dev Calls the withdraw function and withdraw asset and collateral from a pool.
     /// @param params The parameters for this function found in IWithdraw interface.
     /// @return tokensOut The amount of asset ERC20 and collateral ERC20 received by assetTo and collateralTo.
-    function collect(
-        IWithdraw.Collect calldata params,
-        bytes32[] calldata _merkleProof
-    ) external returns (IPair.Tokens memory tokensOut);
+    function collect(IWithdraw.Collect calldata params) external returns (IPair.Tokens memory tokensOut);
 
     /// @dev Calls the withdraw function and withdraw asset and collateral from a pool.
     /// @dev The asset received is ETH which will be unwrapped from WETH.
     /// @param params The parameters for this function found in IWithdraw interface.
     /// @return tokensOut The amount of asset ERC20 and collateral ERC20 received by assetTo and collateralTo.
     function collectETHAsset(
-        IWithdraw.CollectETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IWithdraw.CollectETHAsset calldata params
     ) external returns (IPair.Tokens memory tokensOut);
 
     /// @dev Calls the withdraw function and withdraw asset and collateral from a pool.
@@ -261,8 +245,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @param params The parameters for this function found in IWithdraw interface.
     /// @return tokensOut The amount of asset ERC20 and collateral ERC20 received by assetTo and collateralTo.
     function collectETHCollateral(
-        IWithdraw.CollectETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        IWithdraw.CollectETHCollateral calldata params
     ) external returns (IPair.Tokens memory tokensOut);
 
     /// @dev Calls the borrow function and borrow asset from a pool and locking collateral into the pool.
@@ -273,8 +256,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The token id of locked debt ERC721 received by dueTo.
     /// @return dueOut The locked debt ERC721 received by dueTo.
     function borrowGivenPercent(
-        IBorrow.BorrowGivenPercent calldata params,
-        bytes32[] calldata _merkleProof
+        IBorrow.BorrowGivenPercent calldata params
     ) external returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the borrow function and borrow asset from a pool and locking collateral into the pool.
@@ -285,8 +267,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The token id of locked debt ERC721 received by dueTo.
     /// @return dueOut The locked debt ERC721 received by dueTo.
     function borrowGivenPercentETHAsset(
-        IBorrow.BorrowGivenPercentETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IBorrow.BorrowGivenPercentETHAsset calldata params
     ) external returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the borrow function and borrow asset from a pool and locking collateral into the pool.
@@ -297,8 +278,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return id The token id of locked debt ERC721 received by dueTo.
     /// @return dueOut The locked debt ERC721 received by dueTo.
     function borrowGivenPercentETHCollateral(
-        IBorrow.BorrowGivenPercentETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        IBorrow.BorrowGivenPercentETHCollateral calldata params
     ) external payable returns (uint256 assetOut, uint256 id, IPair.Due memory dueOut);
 
     /// @dev Calls the pay function and withdraw collateral from a pool given debt is paid or being paid.
@@ -309,8 +289,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return collateralOut The total amount of collateral ERC20 receceived by to;
     /// @return creditPositionFullyPaid The array of credit position id that is fully paid.
     function repay(
-        IPay.Repay calldata params,
-        bytes32[] calldata _merkleProof
+        IPay.Repay calldata params
     ) external returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid);
 
     /// @dev Calls the pay function and withdraw collateral from a pool given debt is paid or being paid.
@@ -321,8 +300,7 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return collateralOut The total amount of collateral ERC20 receceived by to;
     /// @return creditPositionFullyPaid The array of credit position id that is fully paid.
     function repayETHAsset(
-        IPay.RepayETHAsset calldata params,
-        bytes32[] calldata _merkleProof
+        IPay.RepayETHAsset calldata params
     ) external payable returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid);
 
     /// @dev Calls the pay function and withdraw collateral from a pool given debt is paid or being paid.
@@ -334,7 +312,6 @@ interface IRouter is ICreditMintCallback, ICreditLendCallback, ICreditBorrowCall
     /// @return collateralOut The total amount of collateral ERC20 receceived by to;
     /// @return creditPositionFullyPaid The array of credit position id that is fully paid.
     function repayETHCollateral(
-        IPay.RepayETHCollateral calldata params,
-        bytes32[] calldata _merkleProof
+        IPay.RepayETHCollateral calldata params
     ) external returns (uint128 assetIn, uint128 collateralOut, uint256[] memory creditPositionFullyPaid);
 }
