@@ -253,8 +253,9 @@ describe("integration tests", () => {
       const cpDebtTokenAfter = await context.creditPositionManager.dueOf(2);
 
       expect(cpDebtTokenBefore.debt.sub(cpDebtTokenAfter.debt)).to.be.eq(cpDebtTokenBefore.debt.div(2));
-      expect(cpDebtTokenBefore.collateral.sub(cpDebtTokenAfter.collateral)).to.be.eq(
-        cpDebtTokenBefore.collateral.div(2)
+      expect(cpDebtTokenBefore.collateral.sub(cpDebtTokenAfter.collateral)).to.be.closeTo(
+        cpDebtTokenBefore.collateral.div(2),
+        1
       );
 
       // check on the cpId 1

@@ -53,7 +53,6 @@ describe("Core#Pair", () => {
     const factory = (await factoryInit(
       signers[0].address,
       signers[0].address,
-      signers[0].address,
       upgradeableBeacon.address,
       undefined,
       undefined,
