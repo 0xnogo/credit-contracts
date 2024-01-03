@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "strict": false,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "typeRoots": ["./typechain", "./node_modules/@types"],
+    "types": ["@nomiclabs/hardhat-ethers", "@nomiclabs/hardhat-waffle"],
+    "resolveJsonModule": true
+  },
+  "include": ["./scripts", "./test", "./deploy"],
+  "files": ["./hardhat.config.ts"]
+}
